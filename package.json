@@ -1,0 +1,19 @@
+{
+  "name": "ds_and_alg",
+  "version": "1.0.0",
+  "description": "Data Structures and Algorithms in JS",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src -d lib",
+    "start": "babel-node src/index.js",
+    "test": "babel-node spec/run.js"
+  },
+  "keywords": ["algorithms", "data", "structures"],
+  "author": "Bruno Pinto",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jasmine": "^3.1.0"
+  }
+}
