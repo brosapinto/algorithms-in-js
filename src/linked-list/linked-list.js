@@ -1,14 +1,7 @@
-/**
- * A Singly Linked List is a linear collection of data elements, called nodes pointing to the next node by means of pointer. It is a data structure consisting of a group of nodes which together represent a sequence.
- */
-
-// Complexity: access O(n), search O(n), insertion O(1), deletion O(1)
-// inserting and deletion is O(n), if we don't separate the indexing op
-
 class Node {
-  constructor(data) {
-    this.data = data;
-    this.next = null;
+  constructor(value, next = null) {
+    this.value = value;
+    this.next = next;
   }
 }
 
@@ -19,8 +12,13 @@ class LinkedList {
     this.numValues = 0;
   }
 
-  add(data) {
-    const node = new Node(data);
+  prepend(value) {
+    this.head = new Node(value, this.head);
+    return this;
+  }
+
+  append(value) {
+    const node = new Node(value);
 
     if (!this.head) {
       this.head = node;
@@ -31,14 +29,15 @@ class LinkedList {
     }
 
     this.numValues++;
+    return this;
   }
 
-  remove(data) {
+  delete(value) {
     let current = this.head;
     let prev = this.head;
 
     while (current) {
-      if (current.data === data) {
+      if (current.value === value) {
         // removing the head
         if (current === this.head) {
           this.head = this.head.next;
@@ -67,7 +66,7 @@ class LinkedList {
     let current = this.head;
 
     while (current) {
-      if (current.data === nodeData) {
+      if (current.value === nodeData) {
         const node = new Node(data);
 
         if (current === this.tail) {
@@ -89,9 +88,27 @@ class LinkedList {
     let current = this.head;
 
     while (current) {
-      fn(current.data);
+      fn(current.value);
       current = current.next;
     }
+  }
+
+  find({ value, callback }) {
+    let current = this.head;
+
+    while (current) {
+      if (callback && callback(current.value)) {
+        return current.value;
+      }
+
+      if (value !== undefined && current.value === value) {
+        return current.value;
+      }
+
+      current = current.next;
+    }
+
+    return null;
   }
 
   lenght() {
