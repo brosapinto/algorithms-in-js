@@ -5,7 +5,7 @@ class Node {
   }
 }
 
-class LinkedList {
+export default class LinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
@@ -58,6 +58,26 @@ class LinkedList {
         prev = current;
       }
 
+      current = current.next;
+    }
+  }
+
+  deleteTail() {
+    if (this.head === this.tail) {
+      this.head = null;
+      this.tail = null;
+    }
+
+    let current = this.head.next;
+    let prev = this.head;
+    while (current) {
+      if (current === this.tail) {
+        prev.next = null;
+        this.tail = prev;
+        break;
+      }
+
+      prev = current;
       current = current.next;
     }
   }
@@ -124,12 +144,14 @@ class LinkedList {
   }
 
   toArray() {
-    let list = [];
-    this.traverse(data => {
-      list.push(data);
-    });
-    return list;
+    let values = [];
+    let current = this.head;
+
+    while (current) {
+      values.push(current.value);
+      current = current.next;
+    }
+
+    return values;
   }
 }
-
-export default LinkedList;

@@ -1,8 +1,13 @@
 import LinkedList from "./linked-list";
 
 describe("LinkedList", () => {
+  let list;
+
+  beforeEach(() => {
+    list = new LinkedList();
+  });
+
   it("append", () => {
-    const list = new LinkedList();
     list.append("hello");
     list.append("world");
     list.append("!");
@@ -12,7 +17,6 @@ describe("LinkedList", () => {
   });
 
   it("delete", () => {
-    const list = new LinkedList();
     list.append(1);
     list.append(2);
     list.append(3);
@@ -24,8 +28,18 @@ describe("LinkedList", () => {
     expect(list.lenght()).toBe(2);
   });
 
+  it("deleteTail", () => {
+    list.append(1);
+    list.append(2);
+    list.append(3);
+
+    expect(list.toArray()).toEqual([1, 2, 3]);
+
+    list.deleteTail();
+    expect(list.toArray()).toEqual([1, 2]);
+  });
+
   it("insertAfter", () => {
-    const list = new LinkedList();
     list.append(1);
     list.append(2);
     list.append(3);
@@ -38,7 +52,6 @@ describe("LinkedList", () => {
   it("traverse", () => {
     const callbak = jasmine.createSpy("iter");
 
-    const list = new LinkedList();
     list.append(1);
     list.append(2);
     list.append(3);
@@ -48,12 +61,17 @@ describe("LinkedList", () => {
   });
 
   it("find", () => {
-    const list = new LinkedList();
     list.append(1);
     list.append(2);
     list.append(3);
 
     expect(list.find({ value: 2 })).toEqual(2);
     expect(list.find({ callback: val => val === 2 })).toEqual(2);
+  });
+
+  it("toArray", () => {
+    list.append(1);
+    list.append(2);
+    expect(list.toArray()).toEqual([1, 2]);
   });
 });
