@@ -1,4 +1,4 @@
-import HashTable from "../src/hash-table";
+import HashTable from "./hash-table";
 
 describe("Hash Table", () => {
   it("calculate hash", () => {

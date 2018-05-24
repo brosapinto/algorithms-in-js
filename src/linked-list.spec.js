@@ -1,4 +1,4 @@
-import LinkedList from "../src/linked-list";
+import LinkedList from "./linked-list";
 
 describe("LinkedList", () => {
   it("add", () => {

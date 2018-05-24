@@ -1,4 +1,4 @@
-import MyArray from "../src/array";
+import MyArray from "./array";
 
 describe("Array", () => {
   let myArray;
