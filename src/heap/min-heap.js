@@ -8,7 +8,7 @@ export default class MinHeap {
   }
 
   _getRightChildIndex(parentIndex) {
-    return 2 * parentIndex + 1;
+    return 2 * parentIndex + 2;
   }
 
   _getParentIndex(childIndex) {
@@ -81,32 +81,62 @@ export default class MinHeap {
     return this;
   }
 
+  remove(item) {
+    while (true) {
+      let index = this.container.findIndex(i => i === item);
+
+      if (index === -1) {
+        break;
+      }
+
+      // if it's the last node of the heap, just remove it
+      if (index === this.container.length - 1) {
+        this.container.pop();
+      } else {
+        // move the last element to the vacant spot
+        this.container[index] = this.container.pop();
+
+        if (
+          this._hasLeftChild(index) &&
+          (!this._hasParent(index) ||
+            this._parent(index) < this.container[index])
+        ) {
+          this._heapifyDown();
+        } else {
+          this._heapifyUp();
+        }
+      }
+    }
+
+    return this;
+  }
+
   _heapifyUp() {
     let index = this.container.length - 1;
-
     // while things are out of order
     while (
       this._hasParent(index) &&
-      this._parent(index) > this.container[index]
+      this.container[index] < this._parent(index)
     ) {
       const parentIndex = this._getParentIndex(index);
-      this._swap(parentIndex, index);
+      this._swap(index, parentIndex);
       index = parentIndex;
     }
   }
 
   _heapifyDown() {
     let index = 0;
+    let nextIndex = null;
 
     while (this._hasLeftChild(index)) {
       // if right child is even smaller, update `smallerChildIndex`
-      let nextIndex = this._getLeftChildIndex(index);
-
       if (
         this._hasRightChild(index) &&
         this._rightChild(index) < this._leftChild(index)
       ) {
         nextIndex = this._getRightChildIndex(index);
+      } else {
+        nextIndex = this._getLeftChildIndex(index);
       }
 
       if (this.container[index] < this.container[nextIndex]) {
