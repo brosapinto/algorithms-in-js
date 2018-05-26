@@ -126,6 +126,16 @@ describe("LinkedList", () => {
     list.append(6);
     list.append(2);
 
+    list.swapReverse();
+    expect(list.toArray()).toEqual([2, 6, 3, 1]);
+  });
+
+  it("reverse 2", () => {
+    list.append(1);
+    list.append(3);
+    list.append(6);
+    list.append(2);
+
     list.reverse();
     expect(list.toArray()).toEqual([2, 6, 3, 1]);
   });
