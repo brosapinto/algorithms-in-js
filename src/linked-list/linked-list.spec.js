@@ -74,4 +74,36 @@ describe("LinkedList", () => {
     list.append(2);
     expect(list.toArray()).toEqual([1, 2]);
   });
+
+  it("last", () => {
+    list.append(1);
+    list.append(3);
+    list.append(2);
+
+    expect(list.last().value).toBe(2);
+  });
+
+  it("prev", () => {
+    list.append(1);
+    list.append(3);
+    list.append(2);
+    list.append(5);
+
+    expect(list.prev(list.last()).value).toBe(2);
+    expect(list.prev(list.prev(list.last())).value).toBe(3);
+  });
+
+  it("swap", () => {
+    list.append(1);
+    list.append(3);
+    list.append(2);
+    list.append(5);
+
+    expect(list.toArray()).toEqual([1, 3, 2, 5]);
+    expect(list.swap(list.head, list.last()));
+    expect(list.toArray()).toEqual([5, 3, 2, 1]);
+
+    expect(list.swap(list.head.next, list.prev(list.last())));
+    expect(list.toArray()).toEqual([5, 2, 3, 1]);
+  });
 });

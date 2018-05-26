@@ -131,6 +131,57 @@ export default class LinkedList {
     return null;
   }
 
+  last() {
+    let current = this.head;
+
+    while (current.next) {
+      current = current.next;
+    }
+    return current;
+  }
+
+  prev(node) {
+    let current = this.head;
+
+    if (current === node) {
+      return null;
+    }
+
+    while (current) {
+      if (current.next === node) {
+        break;
+      }
+
+      current = current.next;
+    }
+
+    return current;
+  }
+
+  swap(a, b) {
+    // simple swap (close to each other)
+    if (a.next === b) {
+      a.next = b.next;
+      b.next = a;
+    } else {
+      // farther apart
+      const prevOfB = this.prev(b);
+      const tmp = a.next;
+
+      a.next = b.next;
+      b.next = tmp;
+      prevOfB.next = a;
+    }
+
+    // a might be the head, in which case b is now the head
+    const prevOfA = this.prev(a);
+    if (prevOfA === null) {
+      this.head = b;
+    } else {
+      prevOfA.next = b;
+    }
+  }
+
   lenght() {
     return this.numValues;
   }
