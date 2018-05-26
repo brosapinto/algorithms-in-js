@@ -83,14 +83,14 @@ describe("LinkedList", () => {
     expect(list.last().value).toBe(2);
   });
 
-  it("prev", () => {
+  it("prevNode", () => {
     list.append(1);
     list.append(3);
     list.append(2);
     list.append(5);
 
-    expect(list.prev(list.last()).value).toBe(2);
-    expect(list.prev(list.prev(list.last())).value).toBe(3);
+    expect(list.prevNode(list.last()).value).toBe(2);
+    expect(list.prevNode(list.prevNode(list.last())).value).toBe(3);
   });
 
   it("swap", () => {
@@ -103,7 +103,30 @@ describe("LinkedList", () => {
     expect(list.swap(list.head, list.last()));
     expect(list.toArray()).toEqual([5, 3, 2, 1]);
 
-    expect(list.swap(list.head.next, list.prev(list.last())));
+    expect(list.swap(list.head.next, list.prevNode(list.last())));
     expect(list.toArray()).toEqual([5, 2, 3, 1]);
+  });
+
+  it("at", () => {
+    list.append(1);
+    list.append(3);
+    list.append(2);
+    list.append(5);
+
+    expect(list.at(0).value).toBe(1);
+    expect(list.at(1).value).toBe(3);
+    expect(list.at(2).value).toBe(2);
+    expect(list.at(3).value).toBe(5);
+    expect(list.at(4)).toBe(null);
+  });
+
+  it("reverse", () => {
+    list.append(1);
+    list.append(3);
+    list.append(6);
+    list.append(2);
+
+    list.reverse();
+    expect(list.toArray()).toEqual([2, 6, 3, 1]);
   });
 });

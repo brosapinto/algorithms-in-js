@@ -140,7 +140,7 @@ export default class LinkedList {
     return current;
   }
 
-  prev(node) {
+  prevNode(node) {
     let current = this.head;
 
     if (current === node) {
@@ -165,7 +165,7 @@ export default class LinkedList {
       b.next = a;
     } else {
       // farther apart
-      const prevOfB = this.prev(b);
+      const prevOfB = this.prevNode(b);
       const tmp = a.next;
 
       a.next = b.next;
@@ -174,11 +174,25 @@ export default class LinkedList {
     }
 
     // a might be the head, in which case b is now the head
-    const prevOfA = this.prev(a);
+    const prevOfA = this.prevNode(a);
     if (prevOfA === null) {
       this.head = b;
     } else {
       prevOfA.next = b;
+    }
+  }
+
+  at(index) {
+    let node = this.head;
+    while (--index >= 0 && node) {
+      node = node.next;
+    }
+    return node;
+  }
+
+  reverse() {
+    for (let i = 0; i < Math.floor(this.numValues / 2); i++) {
+      this.swap(this.at(i), this.at(this.numValues - (i + 1)));
     }
   }
 
