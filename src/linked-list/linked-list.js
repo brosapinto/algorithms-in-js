@@ -190,26 +190,19 @@ export default class LinkedList {
     return node;
   }
 
-  // O(n^2)
-  swapReverse() {
-    for (let i = 0; i < Math.floor(this.numValues / 2); i++) {
-      this.swap(this.at(i), this.at(this.numValues - (i + 1)));
-    }
-  }
-
   // O(n)
   reverse() {
-    let list = new LinkedList();
-    let node = this.head;
+    let current = this.head;
+    let prev = null;
 
-    while (node) {
-      list.prepend(node.value);
-      node = node.next;
+    while (current) {
+      const next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
     }
 
-    this.head = list.head;
-    this.tail = list.tail;
-    this.numValues = list.numValues;
+    this.head = prev;
     return this;
   }
 
