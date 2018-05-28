@@ -9,15 +9,30 @@ export default class LinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
-    this.numValues = 0;
+    this.length = 0;
   }
 
-  prepend(value) {
+  /**
+   * Adds a value to the beginning of the list
+   * @param {*} value Value to be prepended
+   * @returns This instance
+   */
+  unshift(value) {
     this.head = new Node(value, this.head);
+    if (!this.tail) {
+      this.tail = this.head;
+    }
+    this.length += 1;
+
     return this;
   }
 
-  append(value) {
+  /**
+   * Adds a value to the end of the list
+   * @param {*} value Value to be appended
+   * @returns This instance
+   */
+  push(value) {
     const node = new Node(value);
 
     if (!this.head) {
@@ -28,172 +43,45 @@ export default class LinkedList {
       this.tail = node;
     }
 
-    this.numValues++;
+    this.length += 1;
+
     return this;
   }
 
-  delete(value) {
+  /**
+   * Removes last item from the list
+   * @returns The removed value
+   */
+  pop() {
     let current = this.head;
-    let prev = this.head;
+    let prev = null;
 
-    while (current) {
-      if (current.value === value) {
-        // removing the head
-        if (current === this.head) {
-          this.head = this.head.next;
-        }
-
-        // if node is the tail
-        if (current === this.tail) {
-          this.tail = prev;
-        }
-
-        // current: found node
-        // prev: the node that linked to this node that must go away
-        // so, prev.next now needs to point to the next node, which is the
-        // node that the found node points to
-        prev.next = current.next;
-        this.numValues--;
-      } else {
-        prev = current;
-      }
-
-      current = current.next;
-    }
-  }
-
-  deleteTail() {
-    if (this.head === this.tail) {
-      this.head = null;
-      this.tail = null;
-    }
-
-    let current = this.head.next;
-    let prev = this.head;
     while (current) {
       if (current === this.tail) {
-        prev.next = null;
+        if (prev === null) {
+          this.head = null;
+        } else {
+          prev.next = null;
+        }
+
         this.tail = prev;
+        this.length -= 1;
         break;
       }
 
       prev = current;
       current = current.next;
     }
+
+    return current === null ? null : current.value;
   }
 
-  insertAfter(data, nodeData) {
-    let current = this.head;
-
-    while (current) {
-      if (current.value === nodeData) {
-        const node = new Node(data);
-
-        if (current === this.tail) {
-          this.tail.next = node;
-          this.tail = node; // it's the new tail
-        } else {
-          node.next = current.next;
-          current.next = node;
-        }
-
-        this.numValues++;
-      }
-
-      current = current.next;
-    }
-  }
-
-  traverse(fn) {
-    let current = this.head;
-
-    while (current) {
-      fn(current.value);
-      current = current.next;
-    }
-  }
-
-  find({ value, callback }) {
-    let current = this.head;
-
-    while (current) {
-      if (callback && callback(current.value)) {
-        return current.value;
-      }
-
-      if (value !== undefined && current.value === value) {
-        return current.value;
-      }
-
-      current = current.next;
-    }
-
-    return null;
-  }
-
-  last() {
-    let current = this.head;
-
-    while (current.next) {
-      current = current.next;
-    }
-    return current;
-  }
-
-  prevNode(node) {
-    let current = this.head;
-
-    if (current === node) {
-      return null;
-    }
-
-    while (current) {
-      if (current.next === node) {
-        break;
-      }
-
-      current = current.next;
-    }
-
-    return current;
-  }
-
-  swap(a, b) {
-    // simple swap (close to each other)
-    if (a.next === b) {
-      a.next = b.next;
-      b.next = a;
-    } else {
-      // farther apart
-      const prevOfB = this.prevNode(b);
-      const tmp = a.next;
-
-      a.next = b.next;
-      b.next = tmp;
-      prevOfB.next = a;
-    }
-
-    // a might be the head, in which case b is now the head
-    const prevOfA = this.prevNode(a);
-    if (prevOfA === null) {
-      this.head = b;
-    } else {
-      prevOfA.next = b;
-    }
-  }
-
-  at(index) {
-    let node = this.head;
-    while (--index >= 0 && node) {
-      node = node.next;
-    }
-    return node;
-  }
-
-  // O(n)
+  /**
+   * Reverses the list in place (mutates the list)
+   */
   reverse() {
-    let current = this.head;
     let prev = null;
+    let current = this.head;
 
     while (current) {
       const next = current.next;
@@ -202,31 +90,66 @@ export default class LinkedList {
       current = next;
     }
 
+    this.tail = this.head;
     this.head = prev;
     return this;
   }
 
-  lenght() {
-    return this.numValues;
-  }
-
-  print() {
-    let output = "";
-    this.traverse(data => {
-      output += `${data} `;
-    });
-    console.log(output);
-  }
-
-  toArray() {
-    let values = [];
+  /**
+   * Iterates over the whole list
+   * @param {Function} fn Invoked for each value
+   * @returns This instance
+   */
+  forEach(fn) {
     let current = this.head;
 
     while (current) {
-      values.push(current.value);
+      fn(current.value);
       current = current.next;
     }
 
-    return values;
+    return this;
+  }
+
+  /**
+   * New LinkedList where every value was mapped by mapping function
+   * @param {Function} fn Mapping function
+   * @returns {LinkedList} New list instance
+   */
+  map(fn) {
+    const list = new LinkedList();
+    this.forEach(value => list.push(fn(value)));
+    return list;
+  }
+
+  /**
+   * Looks up the first element on the List where predicate returns true
+   * @param {Function} predicate Filter function
+   * @returns {*} Found element, null otherwise
+   */
+  find(predicate) {
+    let current = this.head;
+    let found = null;
+
+    while (current) {
+      if (predicate(current.value)) {
+        found = current.value;
+        break;
+      }
+
+      current = current.next;
+    }
+
+    return found;
+  }
+
+  /**
+   * Converts the LinkedList into an array
+   * @returns {Array} Array of the List values
+   */
+  toArray() {
+    const array = [];
+    this.forEach(value => array.push(value));
+    return array;
   }
 }

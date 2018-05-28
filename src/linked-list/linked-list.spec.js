@@ -7,126 +7,170 @@ describe("LinkedList", () => {
     list = new LinkedList();
   });
 
-  it("append", () => {
-    list.append("hello");
-    list.append("world");
-    list.append("!");
+  describe("push", () => {
+    it("should append value to the list", () => {
+      expect(list.head).toBeNull();
+      expect(list.tail).toBeNull();
 
-    expect(list.toArray()).toEqual(["hello", "world", "!"]);
-    expect(list.lenght()).toBe(3);
+      list.push(1).push(2);
+      expect(list.head).toEqual({ next: { next: null, value: 2 }, value: 1 });
+      expect(list.tail).toEqual({ next: null, value: 2 });
+    });
+
+    it("should increment list length", () => {
+      expect(list.length).toBe(0);
+
+      list.push(1);
+      expect(list.length).toBe(1);
+
+      list.push(1).push(2);
+      expect(list.length).toBe(3);
+    });
   });
 
-  it("delete", () => {
-    list.append(1);
-    list.append(2);
-    list.append(3);
+  describe("unshift", () => {
+    it("should prepend value on empty list", () => {
+      list.unshift(1);
 
-    expect(list.lenght()).toBe(3);
-    list.delete(2);
+      expect(list.length).toBe(1);
+      expect(list.head).toEqual({ next: null, value: 1 });
+      expect(list.tail).toEqual({ next: null, value: 1 });
+    });
 
-    expect(list.toArray()).toEqual([1, 3]);
-    expect(list.lenght()).toBe(2);
+    it("should prepend value", () => {
+      list.unshift(1).unshift(2);
+
+      expect(list.length).toBe(2);
+      expect(list.head).toEqual({ next: { next: null, value: 1 }, value: 2 });
+      expect(list.tail).toEqual({ next: null, value: 1 });
+    });
   });
 
-  it("deleteTail", () => {
-    list.append(1);
-    list.append(2);
-    list.append(3);
+  describe("pop", () => {
+    it("returns null when list is empty", () => {
+      expect(list.pop()).toBe(null);
+    });
 
-    expect(list.toArray()).toEqual([1, 2, 3]);
+    it("pops last item in the list", () => {
+      list
+        .push(1)
+        .push(2)
+        .push(3);
 
-    list.deleteTail();
-    expect(list.toArray()).toEqual([1, 2]);
+      expect(list.length).toBe(3);
+
+      expect(list.pop()).toBe(3);
+      expect(list.length).toBe(2);
+
+      expect(list.pop()).toBe(2);
+      expect(list.length).toBe(1);
+
+      expect(list.pop()).toBe(1);
+      expect(list.length).toBe(0);
+
+      expect(list.pop()).toBe(null);
+      expect(list.head).toBe(null);
+      expect(list.tail).toBe(null);
+      expect(list.length).toBe(0);
+    });
   });
 
-  it("insertAfter", () => {
-    list.append(1);
-    list.append(2);
-    list.append(3);
-    list.insertAfter(0, 2);
+  describe("reverse", () => {
+    it("should reverse empty list", () => {
+      expect(list.head).toEqual(null);
+      expect(list.tail).toEqual(null);
 
-    expect(list.lenght()).toBe(4);
-    expect(list.toArray()).toEqual([1, 2, 0, 3]);
+      list.reverse();
+      expect(list.head).toEqual(null);
+      expect(list.tail).toEqual(null);
+    });
+
+    it("should reverse list in place", () => {
+      list
+        .push(1)
+        .push(2)
+        .push(3);
+
+      list.reverse();
+      expect(list.length).toBe(3);
+      expect(list.head).toEqual({
+        next: { next: { next: null, value: 1 }, value: 2 },
+        value: 3
+      });
+      expect(list.tail).toEqual({ next: null, value: 1 });
+    });
   });
 
-  it("traverse", () => {
-    const callbak = jasmine.createSpy("iter");
+  describe("toArray", () => {
+    it("should return empty array for an empty list", () => {
+      expect(list.toArray()).toEqual([]);
+    });
 
-    list.append(1);
-    list.append(2);
-    list.append(3);
+    it("should return array with list values", () => {
+      list
+        .push(1)
+        .push(3)
+        .push(2);
 
-    list.traverse(callbak);
-    expect(callbak.calls.allArgs()).toEqual([[1], [2], [3]]);
+      expect(list.toArray()).toEqual([1, 3, 2]);
+    });
   });
 
-  it("find", () => {
-    list.append(1);
-    list.append(2);
-    list.append(3);
+  describe("forEach", () => {
+    it("should invoke callback on each iteration", () => {
+      const cb = jest.fn();
 
-    expect(list.find({ value: 2 })).toEqual(2);
-    expect(list.find({ callback: val => val === 2 })).toEqual(2);
+      list
+        .push(1)
+        .push(2)
+        .push(3);
+      list.forEach(cb);
+
+      expect(cb).toHaveBeenCalledTimes(3);
+      expect(cb).toHaveBeenCalledWith(1);
+      expect(cb).toHaveBeenCalledWith(2);
+      expect(cb).toHaveBeenCalledWith(3);
+    });
   });
 
-  it("toArray", () => {
-    list.append(1);
-    list.append(2);
-    expect(list.toArray()).toEqual([1, 2]);
+  describe("map", () => {
+    it("should return a new LinkedList where each item has been mapped", () => {
+      const cb = jest.fn().mockImplementation(x => x * 2);
+
+      const newList = list
+        .push(1)
+        .push(2)
+        .push(3)
+        .map(cb);
+
+      expect(list.toArray()).toEqual([1, 2, 3]);
+      expect(newList.toArray()).toEqual([2, 4, 6]);
+    });
   });
 
-  it("last", () => {
-    list.append(1);
-    list.append(3);
-    list.append(2);
+  describe("find", () => {
+    it("should return found element", () => {
+      list
+        .push(1)
+        .push(3)
+        .push(2)
+        .push(3);
 
-    expect(list.last().value).toBe(2);
-  });
+      expect(list.find(i => i === 1)).toBe(1);
+      expect(list.length).toBe(4);
 
-  it("prevNode", () => {
-    list.append(1);
-    list.append(3);
-    list.append(2);
-    list.append(5);
+      expect(list.find(i => i === 2)).toBe(2);
+      expect(list.length).toBe(4);
 
-    expect(list.prevNode(list.last()).value).toBe(2);
-    expect(list.prevNode(list.prevNode(list.last())).value).toBe(3);
-  });
+      expect(list.find(i => i === 3)).toBe(3);
+      expect(list.length).toBe(4);
+    });
 
-  it("swap", () => {
-    list.append(1);
-    list.append(3);
-    list.append(2);
-    list.append(5);
+    it("should return null when could not found item", () => {
+      expect(list.find(i => i === 1)).toBe(null);
 
-    expect(list.toArray()).toEqual([1, 3, 2, 5]);
-    expect(list.swap(list.head, list.last()));
-    expect(list.toArray()).toEqual([5, 3, 2, 1]);
-
-    expect(list.swap(list.head.next, list.prevNode(list.last())));
-    expect(list.toArray()).toEqual([5, 2, 3, 1]);
-  });
-
-  it("at", () => {
-    list.append(1);
-    list.append(3);
-    list.append(2);
-    list.append(5);
-
-    expect(list.at(0).value).toBe(1);
-    expect(list.at(1).value).toBe(3);
-    expect(list.at(2).value).toBe(2);
-    expect(list.at(3).value).toBe(5);
-    expect(list.at(4)).toBe(null);
-  });
-
-  it("reverse", () => {
-    list.append(1);
-    list.append(3);
-    list.append(6);
-    list.append(2);
-
-    list.reverse();
-    expect(list.toArray()).toEqual([2, 6, 3, 1]);
+      list.push(2);
+      expect(list.find(i => i === 1)).toBe(null);
+    });
   });
 });

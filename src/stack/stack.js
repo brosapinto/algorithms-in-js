@@ -6,15 +6,15 @@ export default class Stack {
   }
 
   isEmpty() {
-    return !this.values.tail;
+    return this.values.length === 0;
   }
 
   push(value) {
-    this.values.append(value);
+    this.values.push(value);
   }
 
   pop() {
-    this.values.deleteTail();
+    this.values.pop();
   }
 
   peek() {
