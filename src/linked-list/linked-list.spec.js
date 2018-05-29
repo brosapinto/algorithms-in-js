@@ -195,13 +195,13 @@ describe("LinkedList", () => {
         .push(2)
         .push(3);
 
-      expect(list.find(i => i === 1).value).toBe(1);
+      expect(list.find(i => i === 1)).toBe(1);
       expect(list.length).toBe(4);
 
-      expect(list.find(i => i === 2).value).toBe(2);
+      expect(list.find(i => i === 2)).toBe(2);
       expect(list.length).toBe(4);
 
-      expect(list.find(i => i === 3).value).toBe(3);
+      expect(list.find(i => i === 3)).toBe(3);
       expect(list.length).toBe(4);
     });
 

@@ -161,7 +161,7 @@ export default class LinkedList {
 
     while (current) {
       if (predicate(current.value)) {
-        found = current;
+        found = current.value;
         break;
       }
 
