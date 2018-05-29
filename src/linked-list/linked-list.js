@@ -180,4 +180,8 @@ export default class LinkedList {
     this.forEach(value => array.push(value));
     return array;
   }
+
+  toString() {
+    return this.toArray().toString();
+  }
 }
