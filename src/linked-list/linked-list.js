@@ -76,6 +76,34 @@ export default class LinkedList {
     return current === null ? null : current.value;
   }
 
+  delete(predicate) {
+    let current = this.head;
+    let prev = null;
+
+    while (current) {
+      if (predicate(current.value)) {
+        if (prev === null) {
+          this.head = current.next;
+          prev = this.head;
+        } else {
+          prev.next = current.next;
+        }
+
+        if (this.tail === current) {
+          this.tail = prev;
+        }
+
+        this.length -= 1;
+        return current.value;
+      }
+
+      prev = current;
+      current = current.next;
+    }
+
+    return null;
+  }
+
   /**
    * Reverses the list in place (mutates the list)
    */
@@ -133,7 +161,7 @@ export default class LinkedList {
 
     while (current) {
       if (predicate(current.value)) {
-        found = current.value;
+        found = current;
         break;
       }
 

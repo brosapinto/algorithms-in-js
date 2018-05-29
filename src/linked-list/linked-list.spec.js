@@ -101,6 +101,45 @@ describe("LinkedList", () => {
     });
   });
 
+  describe("delete", () => {
+    it("should return deleted value", () => {
+      list.push(1).push(2);
+
+      const value = list.delete(x => x === 1);
+      expect(value).toBe(1);
+      expect(list.length).toBe(1);
+      expect(list.toArray()).toEqual([2]);
+      expect(list.head).toEqual({ next: null, value: 2 });
+      expect(list.tail).toEqual({ next: null, value: 2 });
+    });
+
+    it("should delete last element in the list", () => {
+      list
+        .push(1)
+        .push(2)
+        .push(3);
+
+      const value = list.delete(x => x === 3);
+      expect(value).toBe(3);
+      expect(list.length).toBe(2);
+      expect(list.toArray()).toEqual([1, 2]);
+      expect(list.head).toEqual({ next: { next: null, value: 2 }, value: 1 });
+      expect(list.tail).toEqual({ next: null, value: 2 });
+    });
+
+    it("should delete element at the middle of the list", () => {
+      list
+        .push(1)
+        .push(2)
+        .push(3);
+
+      const value = list.delete(x => x === 2);
+      expect(value).toBe(2);
+      expect(list.length).toBe(2);
+      expect(list.toArray()).toEqual([1, 3]);
+    });
+  });
+
   describe("toArray", () => {
     it("should return empty array for an empty list", () => {
       expect(list.toArray()).toEqual([]);
@@ -156,13 +195,13 @@ describe("LinkedList", () => {
         .push(2)
         .push(3);
 
-      expect(list.find(i => i === 1)).toBe(1);
+      expect(list.find(i => i === 1).value).toBe(1);
       expect(list.length).toBe(4);
 
-      expect(list.find(i => i === 2)).toBe(2);
+      expect(list.find(i => i === 2).value).toBe(2);
       expect(list.length).toBe(4);
 
-      expect(list.find(i => i === 3)).toBe(3);
+      expect(list.find(i => i === 3).value).toBe(3);
       expect(list.length).toBe(4);
     });
 
