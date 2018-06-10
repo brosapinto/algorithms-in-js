@@ -1,18 +1,4 @@
-const memoize = (fn, genKey) => {
-  const cache = {};
-
-  return (...args) => {
-    const key = genKey(...args);
-    if (cache.hasOwnProperty(key)) {
-      return cache[key];
-    }
-
-    const result = fn(...args);
-    cache[key] = result;
-
-    return result;
-  };
-};
+import memoize from "../dash/memoize";
 
 const find = memoize((list, total, index) => {
   if (total === 0) {
