@@ -148,6 +148,10 @@ export default class MinHeap {
     }
   }
 
+  isEmpty() {
+    return this.container.length < 1;
+  }
+
   toString() {
     return this.container.toString();
   }

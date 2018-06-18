@@ -118,4 +118,11 @@ describe("MinHeap", () => {
     expect(heap.remove(3).toString()).toEqual("4");
     expect(heap.remove(4).toString()).toEqual("");
   });
+
+  test("isEmpty", () => {
+    expect(heap.isEmpty()).toBe(true);
+
+    heap.add(0);
+    expect(heap.isEmpty()).toBe(false);
+  });
 });
