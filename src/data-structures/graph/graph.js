@@ -98,6 +98,31 @@ export default class Graph {
     return Object.values(this.edges).reduce((w, edge) => w + edge.weight, 0);
   }
 
+  getAdjacencyMatrix() {
+    const vertices = this.getAllVertices();
+    const verticesIndices = this.getVerticesIndices();
+
+    // init matrix with infinities, meaning that there
+    // is no way of getting from one vertex to another
+    const adjacencyMatrix = Array(vertices.length)
+      .fill(null)
+      .map(() => Array(vertices.length).fill(Infinity));
+
+    // fill the columns
+    vertices.forEach((vertex, vertexIndex) => {
+      vertex.getNeighbors().forEach(neighbor => {
+        const neighborIndex = verticesIndices[neighbor.getKey()];
+
+        adjacencyMatrix[vertexIndex][neighborIndex] = this.findEdge(
+          vertex,
+          neighbor
+        ).weight;
+      });
+    });
+
+    return adjacencyMatrix;
+  }
+
   reverse() {
     this.getAllEdges().forEach(edge => {
       // Delete straight edge from graph and from vertices.

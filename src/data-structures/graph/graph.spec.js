@@ -320,4 +320,58 @@ describe("Graph", () => {
       D: 3
     });
   });
+
+  it("should generate adjacency matrix for undirected graph", () => {
+    const vertexA = new Vertex("A");
+    const vertexB = new Vertex("B");
+    const vertexC = new Vertex("C");
+    const vertexD = new Vertex("D");
+
+    const edgeAB = new Edge(vertexA, vertexB);
+    const edgeBC = new Edge(vertexB, vertexC);
+    const edgeCD = new Edge(vertexC, vertexD);
+    const edgeBD = new Edge(vertexB, vertexD);
+
+    const graph = new Graph();
+    graph
+      .addEdge(edgeAB)
+      .addEdge(edgeBC)
+      .addEdge(edgeCD)
+      .addEdge(edgeBD);
+
+    const adjacencyMatrix = graph.getAdjacencyMatrix();
+    expect(adjacencyMatrix).toEqual([
+      [Infinity, 0, Infinity, Infinity],
+      [0, Infinity, 0, 0],
+      [Infinity, 0, Infinity, 0],
+      [Infinity, 0, 0, Infinity]
+    ]);
+  });
+
+  it("should generate adjacency matrix for directed graph", () => {
+    const vertexA = new Vertex("A");
+    const vertexB = new Vertex("B");
+    const vertexC = new Vertex("C");
+    const vertexD = new Vertex("D");
+
+    const edgeAB = new Edge(vertexA, vertexB, 2);
+    const edgeBC = new Edge(vertexB, vertexC, 1);
+    const edgeCD = new Edge(vertexC, vertexD, 5);
+    const edgeBD = new Edge(vertexB, vertexD, 7);
+
+    const graph = new Graph(true);
+    graph
+      .addEdge(edgeAB)
+      .addEdge(edgeBC)
+      .addEdge(edgeCD)
+      .addEdge(edgeBD);
+
+    const adjacencyMatrix = graph.getAdjacencyMatrix();
+    expect(adjacencyMatrix).toEqual([
+      [Infinity, 2, Infinity, Infinity],
+      [Infinity, Infinity, 1, 7],
+      [Infinity, Infinity, Infinity, 5],
+      [Infinity, Infinity, Infinity, Infinity]
+    ]);
+  });
 });
