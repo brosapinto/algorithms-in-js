@@ -45,6 +45,8 @@ export default class BinarySearchTree {
         break;
       }
     }
+
+    return this;
   }
 
   contains(value) {

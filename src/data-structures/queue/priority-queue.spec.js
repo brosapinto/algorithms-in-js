@@ -29,4 +29,14 @@ describe("PriorityQueue", () => {
     expect(priorityQueue.poll()).toBe(10);
     expect(priorityQueue.poll()).toBe(5);
   });
+
+  it("should correctly state whether it is empty or not", () => {
+    expect(priorityQueue.isEmpty()).toBeTruthy();
+
+    priorityQueue.add(1);
+    expect(priorityQueue.isEmpty()).toBeFalsy();
+
+    priorityQueue.poll();
+    expect(priorityQueue.isEmpty()).toBeTruthy();
+  });
 });

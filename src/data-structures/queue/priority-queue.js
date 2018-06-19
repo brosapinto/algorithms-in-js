@@ -27,4 +27,8 @@ export default class PriorityQueue {
   peek() {
     return this.priorities[this.heap.peek()][0];
   }
+
+  isEmpty() {
+    return this.heap.isEmpty();
+  }
 }
