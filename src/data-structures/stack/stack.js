@@ -14,7 +14,7 @@ export default class Stack {
   }
 
   pop() {
-    this.values.pop();
+    return this.values.pop();
   }
 
   peek() {

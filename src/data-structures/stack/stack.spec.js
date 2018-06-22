@@ -25,7 +25,7 @@ describe("Stack", () => {
     stack.push(3);
 
     expect(stack.toArray()).toEqual([3, 2, 1]);
-    stack.pop();
+    expect(stack.pop()).toBe(3);
     expect(stack.toArray()).toEqual([2, 1]);
   });
 
