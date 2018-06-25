@@ -1,4 +1,6 @@
-import memoize from "../dash/memoize";
+import memoize from "../../../dash/memoize";
+
+const cacheKey = (_, total, index) => `${total}:${index}`;
 
 const find = memoize((list, total, index) => {
   if (total === 0) {
@@ -16,7 +18,7 @@ const find = memoize((list, total, index) => {
   return (
     find(list, total - list[index], index - 1) + find(list, total, index - 1)
   );
-}, (_, total, index) => `${total}:${index}`);
+}, cacheKey);
 
 // https://www.youtube.com/watch?v=nqlNzOcnCfs
 export default (list, total) => find(list, total, list.length - 1);
