@@ -13,7 +13,7 @@ export default class Graph {
   }
 
   getAllVertices() {
-    return Object.entries(this.vertices).map(([k, v]) => v);
+    return Object.values(this.vertices);
   }
 
   getVerticesIndices() {
