@@ -9,13 +9,12 @@ const initCallbacks = (callbacks = {}) => {
   };
 };
 
-export default function bfs(root, callbacks) {
-  const fns = initCallbacks(callbacks);
-  const queue = [];
+function bfsRecur(root, callbacks) {
+  let queue = [];
 
   queue.push(root);
 
-  // while queue isn't empty
+  // while queue has items
   while (queue.length > 0) {
     const node = queue.shift();
 
@@ -31,4 +30,8 @@ export default function bfs(root, callbacks) {
 
     callbacks.leaveNode(node);
   }
+}
+
+export default function bfs(root, callbacks) {
+  bfsRecur(root, initCallbacks(callbacks));
 }
