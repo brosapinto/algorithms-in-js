@@ -18,6 +18,18 @@ describe("PriorityQueue", () => {
     expect(priorityQueue.peek()).toBe(100);
   });
 
+  it("should pop items in insertion order, if priority is the same", () => {
+    priorityQueue.add(10);
+    priorityQueue.add(2);
+    priorityQueue.add(5);
+    priorityQueue.add(9);
+
+    expect(priorityQueue.poll()).toBe(10);
+    expect(priorityQueue.poll()).toBe(2);
+    expect(priorityQueue.poll()).toBe(5);
+    expect(priorityQueue.poll()).toBe(9);
+  });
+
   it("should poll from queue while respecting priority", () => {
     priorityQueue.add(10, 1);
     priorityQueue.add(5, 2);
