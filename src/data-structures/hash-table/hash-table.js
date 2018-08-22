@@ -32,6 +32,8 @@ export class HashTable {
     } else {
       node.value = value;
     }
+
+    return this;
   }
 
   delete(key) {
