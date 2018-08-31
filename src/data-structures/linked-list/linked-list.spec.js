@@ -212,4 +212,24 @@ describe("LinkedList", () => {
       expect(list.find(i => i === 1)).toBe(null);
     });
   });
+
+  describe("fromArray", () => {
+    test("converts an empty array into an empty list", () => {
+      expect(LinkedList.fromArray([])).toEqual({
+        head: null,
+        length: 0,
+        tail: null
+      });
+    });
+
+    test("converts an array into a list and keeps order", () => {
+      expect(LinkedList.fromArray([10, 5, 3, 12, 8]).toArray()).toEqual([
+        10,
+        5,
+        3,
+        12,
+        8
+      ]);
+    });
+  });
 });

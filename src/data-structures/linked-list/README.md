@@ -6,16 +6,16 @@ This data structure allows for efficient insertion or removal of elements from a
 
 Complexity:
 
-* access O(n)
-* search O(n)
-* insertion O(1)
-* deletion O(1)
+- access O(n)
+- search O(n)
+- insertion O(1)
+- deletion O(1)
 
-Inserting and deletion is O(n), if we don't separate it the access operation.
+Inserting and deletion is O(n), if we don't account for the access operation.
 
 ![Linked List](https://upload.wikimedia.org/wikipedia/commons/6/6d/Singly-linked-list.svg)
 
 ## References
 
-* [Wikipedia](https://en.wikipedia.org/wiki/Linked_list)
-* [YouTube](https://www.youtube.com/watch?v=njTh_OwMljA&index=2&t=1s&list=PLLXdhg_r2hKA7DPDsunoDZ-Z769jWn4R8)
+- [Wikipedia](https://en.wikipedia.org/wiki/Linked_list)
+- [YouTube](https://www.youtube.com/watch?v=njTh_OwMljA&index=2&t=1s&list=PLLXdhg_r2hKA7DPDsunoDZ-Z769jWn4R8)

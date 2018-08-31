@@ -181,6 +181,10 @@ export default class LinkedList {
     return array;
   }
 
+  static fromArray(arr) {
+    return arr.reduce((list, item) => list.push(item), new LinkedList());
+  }
+
   toString() {
     return this.toArray().toString();
   }
