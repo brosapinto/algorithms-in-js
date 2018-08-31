@@ -4,6 +4,8 @@ Collection of Data Structures and Algorithms in JavaScript, including several _p
 
 Greatly inspired by [trekhleb's](https://github.com/trekhleb/javascript-algorithms/) awesome repository.
 
+Execute `npm test` to run tests (after `npm i`, to install all dependencies)
+
 ## Complexity
 
 The complexity of a data structure can be seen as a way of expressing their advantages and disadvantages easily, according to a specifig problem.

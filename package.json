@@ -4,8 +4,6 @@
   "description": "Data Structures and Algorithms in JS",
   "main": "index.js",
   "scripts": {
-    "build": "babel src -d lib",
-    "start": "babel-node src/index.js",
     "test": "jest"
   },
   "keywords": [
