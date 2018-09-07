@@ -50,4 +50,16 @@ export default class DoublyLinkedList {
   static fromArray(arr) {
     return arr.reduce((list, item) => list.push(item), new DoublyLinkedList());
   }
+
+  static toArray(head) {
+    let arr = [];
+    let curr = head;
+
+    while (curr !== null) {
+      arr.push(curr.value);
+      curr = curr.next;
+    }
+
+    return arr;
+  }
 }

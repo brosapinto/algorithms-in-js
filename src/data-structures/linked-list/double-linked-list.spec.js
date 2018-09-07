@@ -64,4 +64,22 @@ describe("DoublyLinkedList", () => {
       expect(dlist.toArray()).toEqual([10, 5, 3, 12, 8]);
     });
   });
+
+  describe("static toArray", () => {
+    test("returns an empty array, given null as param", () => {
+      expect(DoublyLinkedList.toArray(null)).toEqual([]);
+    });
+
+    test("returns all items of the list, given the head of that list", () => {
+      let dlist = DoublyLinkedList.fromArray([4, 2, 9, 1]);
+
+      expect(DoublyLinkedList.toArray(dlist.head)).toEqual([4, 2, 9, 1]);
+    });
+
+    test("returns all elements starting at a specific node", () => {
+      let dlist = DoublyLinkedList.fromArray([4, 2, 9, 1]);
+
+      expect(DoublyLinkedList.toArray(dlist.head.next.next)).toEqual([9, 1]);
+    });
+  });
 });
