@@ -15,9 +15,21 @@
   "author": "Bruno Pinto",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "jest": "^22.4.4"
+    "@types/jest": "^23.3.1",
+    "jest": "^22.4.4",
+    "ts-jest": "^23.1.4",
+    "typescript": "^3.0.3"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|js)$": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(\\.|/)spec\\.(ts|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
+  }
 }
