@@ -10,7 +10,7 @@ interface QueueNode {
 }
 
 // https://www.hackerrank.com/challenges/tree-top-view
-export const topView = (root: TreeNode): Array<any> => {
+export const topView = (root: TreeNode | null): Array<any> => {
   let nodes: Table = {};
   let queue: QueueNode[] = [];
 

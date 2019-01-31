@@ -1,7 +1,7 @@
 import { TreeNode } from "../data-structures/tree/binary-tree";
 
 export default function preOrder(
-  node: TreeNode,
+  node: TreeNode | null,
   accumulator: Array<any>
 ): Array<any> {
   if (node !== null) {
